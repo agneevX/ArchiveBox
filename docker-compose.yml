@@ -14,10 +14,13 @@ services:
     archivebox:
         # build: .                              # for developers working on archivebox
         image: ${DOCKER_IMAGE:-archivebox/archivebox:master}
-        command: server --quick-init 0.0.0.0:8000
+        command: "server --quick-init 0.0.0.0:8000"
         ports:
             - 8000:8000
         environment:
+            - PGID=1000                         # Set to your user to avoid running as root
+            - PUID=1000                         
+            - TZ=America/New_York               # Set to your time zone
             - ALLOWED_HOSTS=*                   # add any config options you want as env vars
             - MEDIA_MAX_SIZE=750m
             # - SEARCH_BACKEND_ENGINE=sonic     # uncomment these if you enable sonic below
